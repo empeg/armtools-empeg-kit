@@ -33,7 +33,7 @@ FILES := gcc-inhibitlibc-patch.gz \
 	config.guess \
 	ncurses-5.2.tar.gz \
 	ncurses-tic.diff \
-	zlib-1.1.4.tar.gz \
+	zlib-1.2.5.tar.gz \
 	gettext-0.18.1.1.tar.gz \
 	gettext.patch \
 	arm_cache.conf \
@@ -195,7 +195,7 @@ arm-linux-zlib: arm-linux-gcc
 	rm -rf build-zlib
 	mkdir -p build-zlib
 	tar xzf zlib-*.tar.gz -C build-zlib
-	export PATH=$(PREFIX)/bin:$(PATH) ; ( cd build-zlib/zlib-* \
+	export PATH=$(PREFIX)/arm-empeg-linux/bin:$(PREFIX)/bin:$(PATH) ; ( cd build-zlib/zlib-* \
 		&& LDSHARED="arm-empeg-linux-gcc -shared -Wl,-soname,libz.so.1" CC=arm-empeg-linux-gcc ../zlib*/configure --prefix=$(PREFIX)/arm-empeg-linux --shared \
 		&& $(MAKE) \
 		&& $(MAKE) install prefix=$(PREFIX)/arm-empeg-linux )
