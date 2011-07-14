@@ -40,7 +40,7 @@ FILES := gcc-inhibitlibc-patch.gz \
 
 FILES_PRESENT := $(wildcard $(FILES))
 
-all: check arm-linux-gcc arm-linux-ncurses
+all: check arm-linux-gcc arm-linux-ncurses arm-linux-zlib arm-linux-gettext
 	@echo
 	@echo Done
 
