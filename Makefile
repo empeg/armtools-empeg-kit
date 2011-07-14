@@ -36,11 +36,15 @@ FILES := gcc-inhibitlibc-patch.gz \
 	zlib-1.1.4.tar.gz \
 	gettext-0.18.1.1.tar.gz \
 	gettext.patch \
+	arm_cache.conf \
+	glib-ssize.diff \
+	glib-tests.diff \
+	glib-2.28.8.tar.bz2 \
 	linux-2.*.tar.gz
 
 FILES_PRESENT := $(wildcard $(FILES))
 
-all: check arm-linux-gcc arm-linux-ncurses arm-linux-zlib arm-linux-gettext
+all: check arm-linux-gcc arm-linux-ncurses arm-linux-zlib arm-linux-glib
 	@echo
 	@echo Done
 
@@ -170,6 +174,21 @@ arm-linux-gettext: arm-linux-gcc
 		&& $(MAKE) install )
 	du -s build-gettext > arm-linux-gettext
 	rm -rf build-gettext
+
+arm-linux-glib: arm-linux-gettext arm-linux-zlib
+	@echo Making glib
+	rm -rf build-glib/build
+	mkdir -p build-glib/build
+	tar xjf glib-*.tar.bz2 -C build-glib
+	cat glib-ssize.diff|patch -d build-glib/glib* -p1
+	cat glib-tests.diff|patch -d build-glib/glib* -p1
+	cp arm_cache.conf build-glib/build/arm_cache.conf
+	export PATH=$(PREFIX)/arm-empeg-linux/bin:$(PREFIX)/bin:$(PATH) ; ( cd build-glib/build \
+		&& CC=arm-empeg-linux-gcc ../glib*/configure --host=arm-linux --build=i386-apple-darwin --prefix=$(PREFIX)/arm-empeg-linux --cache-file=arm_cache.conf\
+		&& $(MAKE) \
+		&& $(MAKE) install )
+	du -s build-glib > arm-linux-glib
+	rm -rf build-glib
 
 arm-linux-zlib: arm-linux-gcc
 	@echo Making zlib
