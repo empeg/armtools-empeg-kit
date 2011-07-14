@@ -41,11 +41,12 @@ FILES := gcc-inhibitlibc-patch.gz \
 	glib-tests.diff \
 	glib-io.diff \
 	glib-2.28.8.tar.bz2 \
+	libtool-2.4.tar.gz \
 	linux-2.*.tar.gz
 
 FILES_PRESENT := $(wildcard $(FILES))
 
-all: check arm-linux-gcc arm-linux-ncurses arm-linux-zlib arm-linux-glib
+all: check arm-linux-gcc arm-linux-ncurses arm-linux-glib
 	@echo
 	@echo Done
 
@@ -176,7 +177,7 @@ arm-linux-gettext: arm-linux-gcc
 	du -s build-gettext > arm-linux-gettext
 	rm -rf build-gettext
 
-arm-linux-glib: arm-linux-gettext arm-linux-zlib
+arm-linux-glib: arm-linux-gettext arm-linux-zlib arm-linux-libtool
 	@echo Making glib
 	rm -rf build-glib/build
 	mkdir -p build-glib/build
@@ -186,11 +187,23 @@ arm-linux-glib: arm-linux-gettext arm-linux-zlib
 	cat glib-io.diff|patch -d build-glib/glib* -p1
 	cp arm_cache.conf build-glib/build/arm_cache.conf
 	export PATH=$(PREFIX)/arm-empeg-linux/bin:$(PREFIX)/bin:$(PATH) ; ( cd build-glib/build \
-		&& CC=arm-empeg-linux-gcc ../glib*/configure --host=arm-linux --build=i386-apple-darwin --prefix=$(PREFIX)/arm-empeg-linux --cache-file=arm_cache.conf\
+		&& NM=arm-empeg-linux-nm CC=arm-empeg-linux-gcc ../glib*/configure --host=arm-linux --build=i386-apple-darwin --prefix=$(PREFIX)/arm-empeg-linux --cache-file=arm_cache.conf\
 		&& $(MAKE) \
 		&& $(MAKE) install )
 	du -s build-glib > arm-linux-glib
 	rm -rf build-glib
+
+arm-linux-libtool: arm-linux-glibc
+	@echo Making libtool
+	rm -rf build-libtool/build
+	mkdir -p build-libtool/build
+	tar xzf libtool-*.tar.gz -C build-libtool
+	export PATH=$(PREFIX)/arm-empeg-linux/bin:$(PREFIX)/bin:$(PATH) ; ( cd build-libtool/build \
+		&& CC=arm-empeg-linux-gcc ../libtool*/configure --host=arm-linux --build=i386-apple-darwin --prefix=$(PREFIX)/arm-empeg-linux \
+		&& $(MAKE) \
+		&& $(MAKE) install )
+	du -s build-libtool > arm-linux-libtool
+	rm -rf build-libtool
 
 arm-linux-zlib: arm-linux-gcc
 	@echo Making zlib
