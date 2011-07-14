@@ -1,0 +1,40 @@
+--- glib-2.28.8/gio/gsocket.c	2011-07-14 00:04:08.000000000 -0400
++++ glib-2.28.8/gio/gsocket.c	2011-06-05 19:18:49.000000000 -0400
+@@ -372,6 +372,7 @@
+       goto err;
+     }
+ 
++#if 0
+   g_assert (G_STRUCT_OFFSET (struct sockaddr, sa_family) +
+ 	    sizeof address.ss_family <= addrlen);
+   switch (address.ss_family)
+@@ -380,6 +379,7 @@
+      case G_SOCKET_FAMILY_IPV4:
+      case G_SOCKET_FAMILY_IPV6:
+        socket->priv->family = address.ss_family;
++#endif
+        switch (socket->priv->type)
+ 	 {
+ 	 case G_SOCKET_TYPE_STREAM:
+@@ -398,6 +396,7 @@
+ 	 default:
+ 	   break;
+ 	 }
++#if 0
+        break;
+ 
+      case G_SOCKET_FAMILY_UNIX:
+@@ -413,10 +410,13 @@
+ 
+   if (socket->priv->family != G_SOCKET_FAMILY_INVALID)
+     {
++#endif
+       addrlen = sizeof address;
+       if (getpeername (fd, (struct sockaddr *) &address, &addrlen) >= 0)
+ 	socket->priv->connected = TRUE;
++#if 0
+     }
++#endif
+ 
+   optlen = sizeof bool_val;
+   if (getsockopt (fd, SOL_SOCKET, SO_KEEPALIVE,

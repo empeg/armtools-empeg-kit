@@ -39,6 +39,7 @@ FILES := gcc-inhibitlibc-patch.gz \
 	arm_cache.conf \
 	glib-ssize.diff \
 	glib-tests.diff \
+	glib-io.diff \
 	glib-2.28.8.tar.bz2 \
 	linux-2.*.tar.gz
 
@@ -182,6 +183,7 @@ arm-linux-glib: arm-linux-gettext arm-linux-zlib
 	tar xjf glib-*.tar.bz2 -C build-glib
 	cat glib-ssize.diff|patch -d build-glib/glib* -p1
 	cat glib-tests.diff|patch -d build-glib/glib* -p1
+	cat glib-io.diff|patch -d build-glib/glib* -p1
 	cp arm_cache.conf build-glib/build/arm_cache.conf
 	export PATH=$(PREFIX)/arm-empeg-linux/bin:$(PREFIX)/bin:$(PATH) ; ( cd build-glib/build \
 		&& CC=arm-empeg-linux-gcc ../glib*/configure --host=arm-linux --build=i386-apple-darwin --prefix=$(PREFIX)/arm-empeg-linux --cache-file=arm_cache.conf\
