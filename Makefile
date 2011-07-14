@@ -6,6 +6,7 @@
 # architecture should be predefining.
 #
 PREFIX:=/opt/local/armtools
+NMSGFMT:=/opt/local/bin/msgfmt
 
 # The other files you need (apart from this Makefile)
 #
@@ -187,7 +188,7 @@ arm-linux-glib: arm-linux-gettext arm-linux-zlib arm-linux-libtool
 	cat glib-io.diff|patch -d build-glib/glib* -p1
 	cp arm_cache.conf build-glib/build/arm_cache.conf
 	export PATH=$(PREFIX)/arm-empeg-linux/bin:$(PREFIX)/bin:$(PATH) ; ( cd build-glib/build \
-		&& NM=arm-empeg-linux-nm CC=arm-empeg-linux-gcc ../glib*/configure --host=arm-linux --build=i386-apple-darwin --prefix=$(PREFIX)/arm-empeg-linux --cache-file=arm_cache.conf\
+		&& MSGFMT=$(NMSGFMT) PKG_CONFIG=false LIBTOOL=$(PREFIX)/arm-empeg-linux/bin/libtool NM=arm-empeg-linux-nm CC=arm-empeg-linux-gcc ../glib*/configure --host=arm-linux --build=i386-apple-darwin --prefix=$(PREFIX)/arm-empeg-linux --cache-file=arm_cache.conf --with-syslibroot=$(PREFIX)/arm-empeg-linux \
 		&& $(MAKE) \
 		&& $(MAKE) install )
 	du -s build-glib > arm-linux-glib
@@ -211,7 +212,7 @@ arm-linux-zlib: arm-linux-gcc
 	mkdir -p build-zlib
 	tar xzf zlib-*.tar.gz -C build-zlib
 	export PATH=$(PREFIX)/arm-empeg-linux/bin:$(PREFIX)/bin:$(PATH) ; ( cd build-zlib/zlib-* \
-		&& LDSHARED="arm-empeg-linux-gcc -shared -Wl,-soname,libz.so.1" CC=arm-empeg-linux-gcc ../zlib*/configure --prefix=$(PREFIX)/arm-empeg-linux --shared \
+		&& CHOST="arm-empeg-linux" LDSHARED="arm-empeg-linux-gcc -shared -Wl,-soname,libz.so.1" CC=arm-empeg-linux-gcc ../zlib*/configure --prefix=$(PREFIX)/arm-empeg-linux --shared \
 		&& $(MAKE) \
 		&& $(MAKE) install prefix=$(PREFIX)/arm-empeg-linux )
 	du -s build-zlib > arm-linux-zlib

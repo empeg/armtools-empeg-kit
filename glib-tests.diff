@@ -15,3 +15,47 @@
    g_assert_cmpstr (p, ==, "-0800");
    g_date_time_unref (dt);
    g_free (p);
+--- glib-2.28.8/gio/tests/gdbus-connection.c	2011-06-05 19:18:49.000000000 -0400
++++ glib-2.28.8/gio/tests//gdbus-connection.c	2011-07-14 13:12:38.000000000 -0400
+@@ -686,7 +686,7 @@
+    * Also to check the total amount of NameOwnerChanged signals - use a 5 second ceiling
+    * to avoid spinning forever
+    */
+-  gboolean quit_mainloop_fired;
++  {  gboolean quit_mainloop_fired;
+   guint quit_mainloop_id;
+   quit_mainloop_fired = FALSE;
+   quit_mainloop_id = g_timeout_add (30000, test_connection_quit_mainloop, &quit_mainloop_fired);
+@@ -696,7 +696,7 @@
+   g_assert_cmpint (count_s1, ==, 1);
+   g_assert_cmpint (count_s2, ==, 2);
+   g_assert_cmpint (count_name_owner_changed, ==, 2);
+-
++  }
+   g_dbus_connection_signal_unsubscribe (c1, s1);
+   g_dbus_connection_signal_unsubscribe (c1, s2);
+   g_dbus_connection_signal_unsubscribe (c1, s3);
+--- glib-2.28.8/gio/tests/memory-output-stream.c	2011-06-05 19:18:49.000000000 -0400
++++ glib-2.28.8/gio/tests//memory-output-stream.c	2011-07-14 12:06:50.000000000 -0400
+@@ -132,17 +132,17 @@
+       g_data_output_stream_put_byte (o, 1, NULL, &error);
+       g_assert_no_error (error);
+     }
+-
++  {
+   gsize data_size_fun = g_memory_output_stream_get_data_size (G_MEMORY_OUTPUT_STREAM (mo));
+   gsize data_size_prop;
+   g_object_get (mo, "data-size", &data_size_prop, NULL);
+   g_assert_cmpint (data_size_fun, ==, data_size_prop);
+-
+-  gpointer data_fun = g_memory_output_stream_get_data (G_MEMORY_OUTPUT_STREAM (mo));
++  }
++  {gpointer data_fun = g_memory_output_stream_get_data (G_MEMORY_OUTPUT_STREAM (mo));
+   gpointer data_prop;
+   g_object_get (mo, "data", &data_prop, NULL);
+   g_assert_cmphex (GPOINTER_TO_SIZE (data_fun), ==, GPOINTER_TO_SIZE (data_prop));
+-
++  }
+   g_object_unref (o);
+   g_object_unref (mo);
+ }
