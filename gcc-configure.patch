@@ -1,0 +1,12 @@
+--- gcc/configure~	Fri Mar 16 09:13:48 2001
++++ gcc/configure	Sat Sep 20 21:36:37 2003
+@@ -5069,6 +5069,9 @@
+ 	romp-*-openbsd*)
+ 		# Nothing special
+ 		;;
++	powerpc-*-darwin*)
++		tmake_file="${tmake_file} rs6000/t-rs6000 rs6000/t-openbsd"
++		;;
+ 	powerpc-*-openbsd*)
+ 		tmake_file="${tmake_file} rs6000/t-rs6000 rs6000/t-openbsd"
+ 		;;

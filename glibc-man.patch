@@ -1,0 +1,63 @@
+--- manual/Makefile~	Sat Sep 20 18:40:09 2003
++++ manual/Makefile	Sat Sep 20 21:09:15 2003
+@@ -25,7 +25,7 @@
+ INSTALL_INFO = install-info
+ 
+ .PHONY: all dvi info
+-all: dvi
++all: #dvi
+ dvi: libc.dvi
+ 
+ # Get glibc's configuration info.
+@@ -38,7 +38,7 @@
+ endif
+ 
+ ifneq ($(strip $(MAKEINFO)),)
+-all: info
++all: #info
+ info: libc.info dir-add.info
+ endif
+ 
+@@ -160,24 +160,24 @@
+ # There are two variants of install-info out there.  The GNU version
+ # knows about the INFO-DIR-SECTION tag, the Debian version doesn't.
+ ifneq ($(OLD_DEBIAN_INSTALL_INFO),yes)
+-install: $(inst_infodir)/libc.info dir-add.info
+-	@if $(SHELL) -c '$(INSTALL_INFO) --version' >/dev/null 2>&1; then \
+-	 test -f $(inst_infodir)/dir || cp dir $(inst_infodir);\
+-	 $(INSTALL_INFO) --info-dir=$(inst_infodir) $(inst_infodir)/libc.info;\
+-	 $(INSTALL_INFO) --info-dir=$(inst_infodir) dir-add.info;\
+-	else : ; fi
+-else
+-install: $(inst_infodir)/libc.info dir-add.info
+-	@if $(SHELL) -c '$(INSTALL_INFO) --version' >/dev/null 2>&1; then \
+-	  test -f $(inst_infodir)/dir || cp dir $(inst_infodir);\
+-	 $(INSTALL_INFO) --info-dir=$(inst_infodir) \
+-	     --section '^GNU Libraries:' 'GNU Libraries:' \
+-	     $(inst_infodir)/libc.info;\
+-	 $(INSTALL_INFO) --info-dir=$(inst_infodir) \
+-	     --section '^GNU C Library functions:' 'GNU C Library functions:' \
+-	     dir-add.info;\
+-	else : ; fi
+-endif
++install: #$(inst_infodir)/libc.info dir-add.info
++#	@if $(SHELL) -c '$(INSTALL_INFO) --version' >/dev/null 2>&1; then \
++#	 test -f $(inst_infodir)/dir || cp dir $(inst_infodir);\
++#	 $(INSTALL_INFO) --info-dir=$(inst_infodir) $(inst_infodir)/libc.info;\
++#	 $(INSTALL_INFO) --info-dir=$(inst_infodir) dir-add.info;\
++#	else : ; fi
++#else
++#install: $(inst_infodir)/libc.info dir-add.info
++#	@if $(SHELL) -c '$(INSTALL_INFO) --version' >/dev/null 2>&1; then \
++#	  test -f $(inst_infodir)/dir || cp dir $(inst_infodir);\
++#	 $(INSTALL_INFO) --info-dir=$(inst_infodir) \
++#	     --section '^GNU Libraries:' 'GNU Libraries:' \
++#	     $(inst_infodir)/libc.info;\
++#	 $(INSTALL_INFO) --info-dir=$(inst_infodir) \
++#	     --section '^GNU C Library functions:' 'GNU C Library functions:' \
++#	     dir-add.info;\
++#	else : ; fi
++endif
+ endif
+ # Catchall implicit rule for other installation targets from the parent.
+ install-%: ;

@@ -1,0 +1,13 @@
+--- build-binutils/binutils-2.10.1/libiberty/strerror.c~	Mon May  3 03:28:54 1999
++++ libiberty/strerror.c	Sat Sep 20 14:18:29 2003
+@@ -462,8 +462,10 @@
+ 
+ #else
+ 
++#if 0
+ extern int sys_nerr;
+ extern char *sys_errlist[];
++#endif
+ 
+ #endif
+ 

@@ -1,0 +1,13 @@
+--- ncurses-5.2/misc/run_tic.in.orig	2011-07-13 17:26:48.000000000 -0400
++++ ncurses-5.2/misc/run_tic.in	2011-07-13 17:27:28.000000000 -0400
+@@ -57,8 +57,8 @@
+ 
+ # Allow tic to run either from the install-path, or from the build-directory
+ case "$PATH" in
+-:*) PATH=../progs:${DESTDIR}$bindir$PATH ;;
+-*) PATH=../progs:${DESTDIR}$bindir:$PATH ;;
++:*) PATH=$PATH:../progs:${DESTDIR}$bindir$PATH ;;
++*) PATH=$PATH:../progs:${DESTDIR}$bindir ;;
+ esac
+ export PATH
+ 

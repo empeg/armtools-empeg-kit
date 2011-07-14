@@ -1,0 +1,13 @@
+--- gcc/configure~	2011-07-03 22:57:21.000000000 -0400
++++ gcc/configure	2011-07-03 23:02:18.000000000 -0400
+@@ -3568,6 +3568,10 @@
+ 		tm_file=i386/freebsd.h
+ 		tmake_file=t-freebsd
+ 		;;
++	i[34567]86-*-darwin*)
++		tm_file=i386/freebsd.h
++		tmake_file=t-freebsd
++		;;
+ 	i[34567]86-*-netbsd*)
+ 		tm_file=i386/netbsd.h
+ 		tmake_file=t-netbsd

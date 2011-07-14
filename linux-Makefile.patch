@@ -1,0 +1,25 @@
+--- Makefile~	Thu Mar 29 23:13:15 2001
++++ Makefile	Sat Sep 20 14:37:05 2003
+@@ -14,6 +14,10 @@
+ 
+ HPATH   	= $(TOPDIR)/include
+ FINDHPATH	= $(HPATH)/asm $(HPATH)/linux $(HPATH)/scsi $(HPATH)/net
++FINDHPATH1	= $(HPATH)/asm 
++FINDHPATH2	= $(HPATH)/linux 
++FINDHPATH3	= $(HPATH)/scsi
++FINDHPATH4	= $(HPATH)/net
+ 
+ HOSTCC  	= gcc
+ HOSTCFLAGS	= -Wall -Wstrict-prototypes -O2 -fomit-frame-pointer
+@@ -442,7 +446,10 @@
+ 
+ dep-files: scripts/mkdep archdep include/linux/version.h
+ 	scripts/mkdep -- init/*.c > .depend
+-	scripts/mkdep -- `find $(FINDHPATH) -name SCCS -prune -o -follow -name \*.h ! -name modversions.h -print` > .hdepend
++	scripts/mkdep -- `find $(FINDHPATH1) -name SCCS -prune -o -follow -name \*.h ! -name modversions.h -print` > .hdepend
++	scripts/mkdep -- `find $(FINDHPATH2) -name SCCS -prune -o -follow -name \*.h ! -name modversions.h -print` > .hdepend
++	scripts/mkdep -- `find $(FINDHPATH3) -name SCCS -prune -o -follow -name \*.h ! -name modversions.h -print` > .hdepend
++	scripts/mkdep -- `find $(FINDHPATH4) -name SCCS -prune -o -follow -name \*.h ! -name modversions.h -print` > .hdepend
+ 	$(MAKE) $(patsubst %,_sfdep_%,$(SUBDIRS)) _FASTDEP_ALL_SUB_DIRS="$(SUBDIRS)"
+ ifdef CONFIG_MODVERSIONS
+ 	$(MAKE) update-modverfile

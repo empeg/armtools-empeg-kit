@@ -1,0 +1,11 @@
+--- gcc/Makefile~	Sat Sep 20 21:43:28 2003
++++ gcc/Makefile	Sat Sep 20 21:45:50 2003
+@@ -583,7 +583,7 @@
+ # We need -lld for collect2 (actually this only matters
+ # for a native compiler, but this is as good a place as any
+ # to define the symbol).
+-CLIB=-lld
++CLIB=#-lld
+ 
+ ####cross overrides
+ CROSS=-DCROSS_COMPILE

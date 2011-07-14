@@ -1,0 +1,11 @@
+--- csu/Makefile,	1999-04-10 08:43:02.000000000 -0400
++++ csu/Makefile	2011-07-03 22:46:47.000000000 -0400
+@@ -182,7 +182,7 @@
+ 		       version=`uname -r`; \
+ 		     fi; \
+ 		   fi; \
+-		   echo -n "\"Compiled on a Linux $$version system "; \
++		   /bin/echo -n "\"Compiled on a Linux $$version system "; \
+ 		   echo "on `date +%Y-%m-%d`.\\n\"" ;; \
+ 	   *) ;; \
+ 	 esac; \
