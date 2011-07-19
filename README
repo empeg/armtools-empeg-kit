@@ -1,0 +1,51 @@
+A cross-compile toolchain kit for arm Linux as found on the empeg/RioCar
+player.
+
+Original README, written by former empeg employee Peter Hartley,
+available as README.Empeg.ToolChain.
+
+Updated for MacOS X 10.2.6 by dbrashear (shadow@dementia.org), 9/22/2003
+Updated for MacOS X 10.6.8 by dbrashear (shadow@gmail.com), 7/12/2011
+
+This should still work on Linux, however, it has been tested with MacOS
+*only*.
+
+* An x86 PC running Linux, bash, gcc, GNU make 
+or
+* An Intel Mac with XCode and gettext (for msgfmt) installed
+
+* The following tarballs, available from FTP sites the world over:
+ binutils-2.21.1.tar.gz (the original kit used 2.10.1)
+ gcc-2.95.3.tar.gz
+ glibc-2.1.3.tar.gz
+ glibc-crypt-2.1.tar.gz
+ glibc-linuxthreads-2.1.3.tar.gz
+ linux-2.4.3.tar.gz 
+
+* This kit, unlike the original, will attempt to build several additional
+  useful bits:
+ gettext-0.18.1.1.tar.gz
+ glib-2.28.8.tar.bz2
+ libtool-2.4.tar.gz
+ ncurses-5.2.tar.gz
+ zlib-1.2.5.tar.gz
+
+* Inside a checkout of this kit, add:
+  - All the tarballs you've collected as above
+
+  - Edit the PREFIX in the Makefile to dictate where your toolchain ends up
+
+  - Also edit the path to msgfmt, needed to compile the language translations
+
+  - Run make. This will build and install your toolchain (so you should run it
+    as a user that can write to $PREFIX).
+
+  - The resulting ARM Linux cross-compiler is newer than the version
+    used to build V2.0 car player software. Of note, binutils and thus the
+    assembler, particularly, are newer. You may have issues with
+    older arm assembly. Typically, patches are available from upstream
+    but posting to the empeg BBS may yield hints, if not.
+
+* When cross-compiling, add $PREFIX/bin to your path.
+
+  - Don't do it when you're not cross-compiling, in case you get the wrong cpp.
